@@ -1,0 +1,3 @@
+!!! Run The Following Code In CMD Under The Corresponding File Path !!!
+
+pyside6-uic -o AI_Vtuber_control_panel_ui_pysd6.py AI_Vtuber_control_panel_ui_pysd6.ui
