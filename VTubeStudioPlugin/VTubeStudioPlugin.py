@@ -65,7 +65,7 @@ AIVT_previous_ani_exp = {
 def AIVT_VTSP_authenticated():
     global AIVT_VTSP_Status, aivt_vtsp
 
-    authentication_token_path = "VtuberStudioPlug/VTSP_authentication_token.txt"
+    authentication_token_path = "VTubeStudioPlugin/VTSP_authentication_token.txt"
 
     AIVT_VTSP_info = {
     "plugin_name":"AIVT_VTSP",
