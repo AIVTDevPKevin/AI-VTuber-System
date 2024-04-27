@@ -15,7 +15,7 @@ import Mic_Record
 import My_Tools.Token_Calculator as tokenC
 import TextToSpeech.edgeTTS as edgeTTS
 import TextToSpeech.OpenAITTS as openaiTTS
-import VtuberStudioPlug.VtuberStudioPlug as vtsp
+import VTubeStudioPlugin.VTubeStudioPlugin as vtsp
 import OBS_websocket.OBS_websocket as obsws
 import OpenAI.whisper.OpenAI_Whisper as whisper
 import OpenAI.whisper.OpenAI_Whisper_API as whisper_api
