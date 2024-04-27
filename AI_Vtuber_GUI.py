@@ -10,7 +10,7 @@ from PySide6 import QtWidgets, QtCore, QtGui
 
 import GUI_control_panel.GUI_py.AI_Vtuber_control_panel_ui_pysd6 as gui
 import AI_Vtuber_UI as aivtui
-import VtuberStudioPlug.VtuberStudioPlug as vtsp
+import VTubeStudioPlugin.VTubeStudioPlugin as vtsp
 import OBS_websocket.OBS_websocket as obsws
 import OpenAI.whisper.OpenAI_Whisper as whisper
 import OpenAI.whisper.OpenAI_Whisper_API as whisper_api
