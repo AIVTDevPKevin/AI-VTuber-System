@@ -5,7 +5,7 @@ A graphical system program that allows you to quickly create your own AI VTuber 
 https://www.youtube.com/watch?v=Hwss_p2Iroc
 
 ## User Manual
-Sorry, it's still in production. (´･ω･`)
+https://docs.google.com/document/d/1na16cbaTVYin16BhvMQmeYYAZPwSyCoQ9sfcie3K-FQ/edit?usp=sharing
 
 ## Whisper Model Download Links
 tiny.en: https://openaipublic.azureedge.net/main/whisper/models/d3dd57d32accea0b295c96e26691aa14d8822fac7d9d27d5dc00b4ca2826dd03/tiny.en.pt
