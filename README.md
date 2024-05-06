@@ -1,7 +1,10 @@
 # AI-VTuber-System
 A graphical system program that allows you to quickly create your own AI VTuber for free.
 
-## Whisper Model Download Links
+## Tutorial Video
+https://www.youtube.com/watch?v=Hwss_p2Iroc
+
+## Manual
 Sorry, it's still in production. (´･ω･`)
 
 ## Whisper Model Download Links
