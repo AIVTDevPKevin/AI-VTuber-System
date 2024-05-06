@@ -1,5 +1,7 @@
 # AI-VTuber-System
 A graphical system program that allows you to quickly create your own AI VTuber for free.
+![00_程式視窗](https://github.com/AIVTDevPKevin/AI-VTuber-System/assets/161304793/6f3bbb2b-a2f2-46b0-b1ce-49e47a7ae285)
+
 
 ## Tutorial Video
 https://www.youtube.com/watch?v=Hwss_p2Iroc
