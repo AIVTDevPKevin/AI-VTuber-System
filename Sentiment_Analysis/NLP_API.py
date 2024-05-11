@@ -62,7 +62,7 @@ def Sentiment_Analysis_NLP(
                 conversation,
                 "",
                 model_name=model,
-                max_output_tokens=64,
+                max_output_tokens=10,
                 temperature=0.2,
                 timeout=timeout,
                 retry=1,
@@ -70,6 +70,13 @@ def Sentiment_Analysis_NLP(
             )
 
     #print(f"Emotion State (LLM): {llm_result}")
+
+    try:
+        mcsw = most_common_specific_word(llm_result, Emo_state_categories)
+    except Exception as e:
+        print(f"\n{e}\n")
+        return "normal"
+            
     mcsw = most_common_specific_word(llm_result, Emo_state_categories)
     #print(f"Emotion State (MCSW): {mcsw}\n")
     print(f"Emotion State: {mcsw}")
