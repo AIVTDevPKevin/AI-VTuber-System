@@ -468,7 +468,7 @@ def subtitles_speak_thread(chat_role, chat_now, ai_ans, ai_name):
 
 def sa_request_thread(text, sa_ans):
     with lock_sa_requst:
-        sa_ans.put(sa_nlp_api.Sentiment_Analysis_NLP(text, Emo_state_categories=vtsp.AIVT_hotkeys_parameters["Emo_state_categories"]))
+        sa_ans.put(sa_nlp_api.Sentiment_Analysis_NLP(text, Emo_state_categories=vtsp.AIVT_hotkeys_parameters["Emo_state_categories"], model=vtsp.AIVT_hotkeys_parameters["sentiment_analysis_model"]))
 
 
 def tts_request_thread(tts_text, tts_path):
