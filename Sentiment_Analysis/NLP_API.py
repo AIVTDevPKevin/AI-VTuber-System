@@ -50,7 +50,7 @@ def Sentiment_Analysis_NLP(
                 conversation,
                 "",
                 model_name=model,
-                max_output_tokens=64,
+                max_output_tokens=10,
                 temperature=0.2,
                 timeout=timeout,
                 retry=1,
