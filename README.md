@@ -5,6 +5,8 @@ A graphical system program that allows you to quickly create your own AI VTuber 
 ## Tutorial Video
 https://www.youtube.com/watch?v=Hwss_p2Iroc
 
+## User Manual
+https://docs.google.com/document/d/1na16cbaTVYin16BhvMQmeYYAZPwSyCoQ9sfcie3K-FQ/edit?usp=sharing
 
 ## Installation Guide
 First, install the main dependencies using:
@@ -15,9 +17,15 @@ Then, for the specific PyTorch packages which require a special handling, use th
 ```
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
+## Nvidia
+GPU Driver 顯示卡驅動程式
+https://www.nvidia.com.tw/Download/index.aspx?lang=tw
 
-## User Manual
-https://docs.google.com/document/d/1na16cbaTVYin16BhvMQmeYYAZPwSyCoQ9sfcie3K-FQ/edit?usp=sharing
+CUDA Toolkit
+https://developer.nvidia.com/cuda-12-1-1-download-archive
+
+cuDNN
+https://developer.nvidia.com/cudnn-downloads
 
 ## Whisper Model Download Links
 tiny.en: https://openaipublic.azureedge.net/main/whisper/models/d3dd57d32accea0b295c96e26691aa14d8822fac7d9d27d5dc00b4ca2826dd03/tiny.en.pt
