@@ -221,8 +221,12 @@ def run_with_timeout_OpenAI_Whisper(
     if whisper_status["loaded_model"] == "":
         print("\n!!! OpenAI Whisper Transcribe Fail !!!\n")
         return ""
+    
+    model_name = whisper_status["loaded_model"]
 
     transcribe_ans = queue.Queue()
+
+    start_time = time.time()
 
     OWt = threading.Thread(
         target = OpenAI_Whisper_thread,
@@ -244,9 +248,12 @@ def run_with_timeout_OpenAI_Whisper(
         return ""
 
     else:
+        end_time = time.time()
         whisper_result = transcribe_ans.get()
-        print("\nOpenAI Whisper ----------\n")
-        print (f"Transcribe : {whisper_result}")
+        print("\nOpenAI Whisper Local ----------\n")
+        print(f"Model: {model_name}")
+        print(f"Duration: {end_time - start_time:.2f}s\n")
+        print(f"Transcribe: {whisper_result}")
         print("\n----------\n")
         return whisper_result 
 
@@ -261,8 +268,6 @@ def OpenAI_Whisper_thread(
         ):
     global model
 
-    start_time = time.time()
-
     try:
         result = model.transcribe(
             audio = audio_path,
@@ -276,10 +281,6 @@ def OpenAI_Whisper_thread(
         aprint(f"!!! Fail Transcribing !!!\n{e}\n")
         ans.put("")
         return
-
-    end_time = time.time()
-
-    aprint(f"Inference time: {end_time - start_time:.2f}s")
 
     ans.put(result["text"])
     return
