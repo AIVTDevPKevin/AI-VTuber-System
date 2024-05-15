@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import string
+import time
 from collections import Counter
 
 import Google.gemini.GoogleAI_Gemini_API as gemini_api
@@ -44,6 +45,7 @@ def Sentiment_Analysis_NLP(
             {"role": "user", "content": text},
         ]
 
+    start_time = time.time()
 
     if model in gemini_model_names_list:
         llm_result = gemini_api.run_with_timeout_GoogleAI_Gemini_API(
@@ -54,7 +56,7 @@ def Sentiment_Analysis_NLP(
                 temperature=0.2,
                 timeout=timeout,
                 retry=1,
-                command="no_print",
+                command="sentiment_analysis",
             )
 
     elif model in gpt_model_names_list:
@@ -69,17 +71,18 @@ def Sentiment_Analysis_NLP(
                 command="no_print",
             )
 
-    #print(f"Emotion State (LLM): {llm_result}")
-
     try:
         mcsw = most_common_specific_word(llm_result, Emo_state_categories)
     except Exception as e:
         print(f"\n{e}\n")
-        return "normal"
-            
-    mcsw = most_common_specific_word(llm_result, Emo_state_categories)
-    #print(f"Emotion State (MCSW): {mcsw}\n")
+        mcsw = "normal"
+
+    end_time = time.time()
+    print("\nSentiment Analysis NLP ----------\n")
+    print(f"Model: {model}")
+    print(f"Duration: {end_time - start_time:.2f}s\n")
     print(f"Emotion State: {mcsw}")
+    print("\n----------\n")
     return mcsw
 
 
