@@ -56,7 +56,7 @@ def Sentiment_Analysis_NLP(
                 temperature=0.2,
                 timeout=timeout,
                 retry=1,
-                command="sentiment_analysis",
+                command="no_print",
             )
 
     elif model in gpt_model_names_list:
