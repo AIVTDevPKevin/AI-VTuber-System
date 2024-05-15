@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import threading
+import time
 import queue
 
 import google.generativeai as genai
@@ -18,17 +19,23 @@ import AIVT_Config
 
 
 gemini_models_max_input_tokens = {
+    "gemini-1.5-flash-latest":1048576,
+    "gemini-1.5-flash":1048576,
+    "gemini-1.5-pro-latest":1048576,
+    "gemini-1.5-pro":1048576,
     "gemini-1.0-pro-latest":30720,
     "gemini-1.0-pro":30720,
     "gemini-1.0-pro-001":30720,
-    "gemini-1.5-pro-latest":1048576,
 }
 
 gemini_models_max_output_tokens = {
+    "gemini-1.5-flash-latest":8192,
+    "gemini-1.5-flash":8192,
+    "gemini-1.5-pro-latest":8192,
+    "gemini-1.5-pro":8192,
     "gemini-1.0-pro-latest":2048,
     "gemini-1.0-pro":2048,
     "gemini-1.0-pro-001":2048,
-    "gemini-1.5-pro-latest":8192,
 }
 
 gemini_parameters = {
@@ -55,6 +62,8 @@ def run_with_timeout_GoogleAI_Gemini_API(
         command=None,
     ):
 
+    start_time = time.time()
+
     ans = queue.Queue()
 
     GGAt = threading.Thread(
@@ -76,13 +85,15 @@ def run_with_timeout_GoogleAI_Gemini_API(
         return None
 
     else:
+        end_time = time.time()
         llm_result = ans.get()
         if command != "no_print":
             print("\nGoogleAI_Gemini_Answer ----------\n")
-            print(f"Model: {model_name}\n")
+            print(f"Model: {model_name}")
+            print(f"Duration: {end_time - start_time:.2f}s\n")
             print(f"{chatQ}\n")
-            print(f"Gemini Answer: {llm_result}\n")
-            print("----------\n")
+            print(f"Gemini Answer : {llm_result}")
+            print("\n----------\n")
 
         cleaned_llm_result = "\n".join(line.strip() for line in llm_result.splitlines() if line.strip())
         return cleaned_llm_result
