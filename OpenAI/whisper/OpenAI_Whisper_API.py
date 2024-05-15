@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import threading
+import time
 import queue
 
 import openai
@@ -143,6 +144,8 @@ def run_with_timeout_OpenAI_Whisper_API(
 
     transcribe_ans = queue.Queue()
 
+    start_time = time.time()
+
     OWAt = threading.Thread(
         target = OpenAI_Whisper_API_thread,
         args = (transcribe_ans, ),
@@ -163,9 +166,11 @@ def run_with_timeout_OpenAI_Whisper_API(
         return ""
 
     else:
+        end_time = time.time()
         whisper_result = transcribe_ans.get()
         print("\nOpenAI Whisper API ----------\n")
-        print (f"Transcribe : {whisper_result}")
+        print(f"Duration: {end_time - start_time:.2f}s\n")
+        print(f"Transcribe: {whisper_result}")
         print("\n----------\n")
         return whisper_result  
 
