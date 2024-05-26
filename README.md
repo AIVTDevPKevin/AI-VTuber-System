@@ -18,7 +18,7 @@ Then, for the specific PyTorch packages which require a special handling, use th
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 ## Nvidia
-GPU Driver 顯示卡驅動程式
+GPU Driver
 https://www.nvidia.com.tw/Download/index.aspx?lang=tw
 
 CUDA Toolkit
