@@ -9,19 +9,19 @@ https://www.youtube.com/watch?v=Hwss_p2Iroc
 https://docs.google.com/document/d/1na16cbaTVYin16BhvMQmeYYAZPwSyCoQ9sfcie3K-FQ/edit?usp=sharing
 
 ## Installation Guide
-First, install the main dependencies using:
+Python >= 3.8, install the main dependencies:
 ```
 pip3 install -r requirements.txt
 ```
-Then, for the specific PyTorch packages which require a special handling, use the following command:
+For the specific PyTorch packages which require a special handling, use the following command:
 ```
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 ## Nvidia
-GPU Driver
+Latest GPU Driver
 https://www.nvidia.com.tw/Download/index.aspx?lang=tw
 
-CUDA Toolkit
+CUDA Toolkit 12.1.1
 https://developer.nvidia.com/cuda-12-1-1-download-archive
 
 cuDNN
