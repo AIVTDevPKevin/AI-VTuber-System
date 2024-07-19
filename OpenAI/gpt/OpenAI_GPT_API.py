@@ -21,6 +21,8 @@ import AIVT_Config
 gpt_models_max_input_tokens = {
     "gpt-4o":128000,
     "gpt-4o-2024-05-13":128000,
+    "gpt-4o-mini":128000,
+    "gpt-4o-mini-2024-07-18":128000,
     "gpt-4-turbo":128000,
     "gpt-4-turbo-2024-04-09":128000,
     "gpt-4-turbo-preview":128000,
@@ -32,20 +34,22 @@ gpt_models_max_input_tokens = {
 }
 
 gpt_models_max_output_tokens = {
-    "gpt-4o":4096,
-    "gpt-4o-2024-05-13":4096,
-    "gpt-4-turbo":4096,
-    "gpt-4-turbo-2024-04-09":4096,
-    "gpt-4-turbo-preview":4096,
-    "gpt-4-0125-preview":4096,
-    "gpt-4-1106-preview":4096,
+    "gpt-4o":16385,
+    "gpt-4o-2024-05-13":16385,
+    "gpt-4o-mini":16385,
+    "gpt-4o-mini-2024-07-18":16385,
+    "gpt-4-turbo":16385,
+    "gpt-4-turbo-2024-04-09":16385,
+    "gpt-4-turbo-preview":16385,
+    "gpt-4-0125-preview":16385,
+    "gpt-4-1106-preview":16385,
     "gpt-3.5-turbo":4096,
     "gpt-3.5-turbo-0125":4096,
     "gpt-3.5-turbo-1106":4096,
 }
 
 gpt_parameters = {
-    "model": "gpt-3.5-turbo",
+    "model": "gpt-4o-mini",
     "max_input_tokens" : 4096,
     "max_output_tokens" : 256,
     "temperature" : 1.00,
