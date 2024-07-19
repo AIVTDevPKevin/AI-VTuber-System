@@ -1834,6 +1834,7 @@ class AI_Vtuber_GUI(gui.Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QPushBut
 
     def Setting_User_Name(self):
         aivtui.GUI_User_Name = self.St_LE_User_Name.text()
+        GUI_config["Setting"]["user_name"] = str(aivtui.GUI_User_Name)
 
 
     def Setting_Character_select(self):
@@ -1977,6 +1978,8 @@ class AI_Vtuber_GUI(gui.Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QPushBut
         mcrc.user_mic_status["mic_hotkeys_using"] = enble
         mcrc.user_mic_status["mic_hotkey_1_using"] = self.St_cB_User_mic_hotkey1.isChecked()
         mcrc.user_mic_status["mic_hotkey_2_using"] = self.St_cB_User_mic_hotkey2.isChecked()
+        GUI_config["Setting"]["user_mic_hotkey_1_using"] = str(self.St_cB_User_mic_hotkey1.isChecked())
+        GUI_config["Setting"]["user_mic_hotkey_2_using"] = str(self.St_cB_User_mic_hotkey2.isChecked())
 
     def Setting_User_mic_hotkey1(self):
         if not mcrc.user_mic_status["mic_hotkey_1_detecting"]:
