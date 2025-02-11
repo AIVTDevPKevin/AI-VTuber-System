@@ -12,5 +12,5 @@ pytchat==0.5.5
 pyvts==0.3.2
 Requests==2.31.0
 tiktoken==0.7.0
-transformers==4.38.2
+transformers>=4.48.0
 twitchio==2.9.1
