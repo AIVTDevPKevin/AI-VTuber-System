@@ -24,7 +24,9 @@ import My_Tools.Token_Calculator as tokenC
 
 Live_Chat_Status = {
     "YouTube_live_chat": False,
-    "YouTube_live_chat_connect_fail_count": 50,
+    "YouTube_live_chat_alive": False,
+    "YouTube_live_chat_retry": False,
+    "YouTube_live_chat_connect_fail_count": 0,
     "Twitch_live_chat": False,
     "llm_request_checker": False,
 }
@@ -76,15 +78,17 @@ def YouTube_live_chat_connect():
         YT_live_chat = pytchat.create(video_id=Live_chat_parameters["yt_live_id"])
         print(f"!!! YouTube Live ID: {Live_chat_parameters['yt_live_id']} Connect Success !!!\n")
         Live_Chat_Status["YouTube_live_chat"] = True
-        Live_Chat_Status["YouTube_live_chat_connect_fail_count"] = 50
+        Live_Chat_Status["YouTube_live_chat_alive"] = True
+        Live_Chat_Status["YouTube_live_chat_connect_fail_count"] = 0
 
     except Exception as e:
+        Live_Chat_Status["YouTube_live_chat_connect_fail_count"] += 1
+
         if Live_Chat_Status["YouTube_live_chat_connect_fail_count"] >= 50:
             print(f"!!! YouTube Live ID: {Live_chat_parameters['yt_live_id']} Connect Failed !!!{e}\n")
+            Live_Chat_Status["YouTube_live_chat"] = False
+            Live_Chat_Status["YouTube_live_chat_alive"] = False
             Live_Chat_Status["YouTube_live_chat_connect_fail_count"] = 0
-
-        Live_Chat_Status["YouTube_live_chat"] = False
-        Live_Chat_Status["YouTube_live_chat_connect_fail_count"] += 1
 
 
 def YouTube_live_chat_get_comments():
@@ -129,9 +133,16 @@ def YouTube_live_chat_get_comments():
                             print(f"\nYouTube Live Chat ----------\n\n{chat_c}\n\n----------\n")
 
             except Exception as e:
-                print(f"YouTube get livechat fail retrying...\n{e}\n")
+                print(f"YouTube get livechat fail:\n{e}\n")
+                break
 
-        Live_Chat_Status["YouTube_live_chat"] = False
+
+        print(f"YouTube Live Chat Reonnecting...")
+        Live_Chat_Status["YouTube_live_chat_alive"] = False
+        while not Live_Chat_Status["YouTube_live_chat_alive"]:
+            time.sleep(0.01)
+
+    Live_Chat_Status["YouTube_live_chat"] = False
 
 def YouTube_live_chat_pick_comments():
     global Live_Chat_Status, Live_chat_parameters, YT_LC_wait_list, Live_Chat_LLM_wait_list
