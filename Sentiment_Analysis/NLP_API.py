@@ -28,7 +28,7 @@ model_names_list = gemini_model_names_list + gpt_model_names_list
 def Sentiment_Analysis_NLP(
         text,
         Emo_state_categories=["normal", "happy", "shy", "proud", "shock", "sad", "angry", "embarrass", "afraid", "confuse"],
-        model="gemini-1.0-pro",
+        model="gemini-2.0-flash",
         timeout=5,
     ):
     global gemini_model_names_list, gpt_model_names_list
