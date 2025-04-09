@@ -6,7 +6,7 @@ A graphical system program that allows you to quickly create your own AI VTuber 
 https://www.youtube.com/watch?v=Hwss_p2Iroc
 
 ## User Manual
-https://docs.google.com/document/d/1na16cbaTVYin16BhvMQmeYYAZPwSyCoQ9sfcie3K-FQ/edit?usp=sharing
+https://docs.google.com/document/d/16DU-DJKMaC-15K6iShLd9ioXc8VqjTLqgMPswsjPjF0/edit?usp=sharing
 
 ## Installation Guide
 Python >= 3.8, install the main dependencies:
@@ -49,3 +49,7 @@ large-v1: https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463e
 large-v2: https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt
 
 large-v3: https://openaipublic.azureedge.net/main/whisper/models/e5b1a55b89c1367dacf97e3e19bfd829a01529dbfdeefa8caeb59b3f1b81dadb/large-v3.pt
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=AIVTDevPKevin/AI-VTuber-System&type=Date)](https://www.star-history.com/#AIVTDevPKevin/AI-VTuber-System&Date)
