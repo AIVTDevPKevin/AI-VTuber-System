@@ -4,7 +4,7 @@ keyboard==0.13.5
 obs-websocket-py==1.0
 openai==1.13.3
 openai-whisper==20231117
-protobuf==4.25.3
+protobuf==4.25.8
 pyaudio==0.2.14
 pydub==0.25.1
 pyside6==6.6.2
