@@ -5,7 +5,8 @@ import threading
 import time
 import queue
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 import AIVT_Config
 
@@ -19,41 +20,37 @@ import AIVT_Config
 
 
 gemini_models_max_input_tokens = {
+    #"gemini-2.5-pro":1048576,
+    "gemini-2.5-flash":1048576,
+    "gemini-2.5-flash-lite":1048576,
     "gemini-2.0-flash":1048576,
-    "gemini-2.0-flash-001":1048576,
     "gemini-2.0-flash-lite":1048576,
-    "gemini-2.0-flash-lite-001":1048576,
-    "gemini-2.5-pro-preview-03-25":1048576,
     "gemini-1.5-flash-latest":1048576,
     "gemini-1.5-flash":1048576,
-    "gemini-1.5-flash-001":1048576,
-    "gemini-1.5-flash-002":1048576,
-    "gemini-1.5-flash-8b-latest":1048576,
-    "gemini-1.5-flash-8b":1048576,
-    "gemini-1.5-flash-8b-001":1048576,
-    "gemini-1.5-pro-latest":2097152,
-    "gemini-1.5-pro":2097152,
-    "gemini-1.5-pro-001":2097152,
-    "gemini-1.5-pro-002":2097152,
+    "gemini-1.5-pro-latest":1048576,
+    "gemini-1.5-pro":1048576,
+    "gemini-1.0-pro-latest":30720,
+    "gemini-1.0-pro":30720,
+    "gemini-1.0-pro-001":30720,
+    "gemini-1.5-flash-002":30720,
+    "gemini-1.5-pro-002":30720,
 }
 
 gemini_models_max_output_tokens = {
+    #"gemini-2.5-pro":65536,
+    "gemini-2.5-flash":65536,
+    "gemini-2.5-flash-lite":65536,
     "gemini-2.0-flash":8192,
-    "gemini-2.0-flash-001":8192,
     "gemini-2.0-flash-lite":8192,
-    "gemini-2.0-flash-lite-001":8192,
-    "gemini-2.5-pro-preview-03-25":65536,
     "gemini-1.5-flash-latest":8192,
     "gemini-1.5-flash":8192,
-    "gemini-1.5-flash-001":8192,
-    "gemini-1.5-flash-002":8192,
-    "gemini-1.5-flash-8b-latest":8192,
-    "gemini-1.5-flash-8b":8192,
-    "gemini-1.5-flash-8b-001":8192,
     "gemini-1.5-pro-latest":8192,
     "gemini-1.5-pro":8192,
-    "gemini-1.5-pro-001":8192,
-    "gemini-1.5-pro-002":8192,
+    "gemini-1.0-pro-latest":2048,
+    "gemini-1.0-pro":2048,
+    "gemini-1.0-pro-001":2048,
+    "gemini-1.5-flash-002":2048,
+    "gemini-1.5-pro-002":2048,
 }
 
 gemini_parameters = {
@@ -83,24 +80,17 @@ def run_with_timeout_GoogleAI_Gemini_API(
     start_time = time.time()
 
     ans = queue.Queue()
-    prompt_tokens = queue.Queue()
-    completion_tokens = queue.Queue()
-    
+
     GGAt = threading.Thread(
         target=GoogleAI_Gemini_API_thread,
-        args=(
-            conversation,
-            ans,
-            prompt_tokens,
-            completion_tokens,
-        ),
+        args=(conversation, ans, ),
         kwargs={
             "model_name":model_name,
             "max_output_tokens":max_output_tokens,
             "temperature":temperature,
             "retry":retry,
-        },
-    )
+            },
+        )
 
 
     GGAt.start()
@@ -112,15 +102,10 @@ def run_with_timeout_GoogleAI_Gemini_API(
     else:
         end_time = time.time()
         llm_result = ans.get()
-        prompt_tokens = prompt_tokens.get()
-        completion_tokens = completion_tokens.get()
         if command != "no_print":
             print("\nGoogleAI_Gemini_Answer ----------\n")
             print(f"Model: {model_name}")
-            print(f"Duration: {end_time - start_time:.2f}s")
-            print(f"Prompt tokens: {prompt_tokens}")
-            print(f"Completion tokens: {completion_tokens}")
-            print(f"Total tokens: {prompt_tokens+completion_tokens}\n")
+            print(f"Duration: {end_time - start_time:.2f}s\n")
             print(f"{chatQ}\n")
             print(f"Gemini Answer : {llm_result}")
             print("\n----------\n")
@@ -132,107 +117,101 @@ def run_with_timeout_GoogleAI_Gemini_API(
 def GoogleAI_Gemini_API_thread(
         conversation,
         ans,
-        prompt_tokens,
-        completion_tokens,
         model_name = "gemini-2.0-flash",
         max_output_tokens = 512,
         temperature = 0.9,
         retry = 3,
         ):
-
     def convert2gemini_conversation(conversation):
         system_contents = []
-        new_conversation = []
-        current_role = None
-        current_parts = []
+        gemini_conversation = []
 
         for entry in conversation:
-            if entry['role'] == 'system':
-                system_contents.append(entry['content'])
+            role = entry['role']
+            content = entry['content']
+
+            if role == 'system':
+                system_contents.append(content)
                 continue
 
-            if entry['role'] == 'assistant':
-                entry['role'] = 'model'
+            if role == 'assistant':
+                role = 'model'
 
-            if entry['role'] == current_role:
-                current_parts.append(entry['content'])
-            else:
-                if current_role is not None:
-                    new_conversation.append({'role': current_role, 'parts': '\n'.join(current_parts)})
+            gemini_conversation.append(types.Content(role=role, parts=[types.Part(text=content)]))
 
-                current_role = entry['role']
-                current_parts = [entry['content']]
+        system_text = '\n'.join(system_contents) if system_contents else None
 
-        if current_role is not None:
-            new_conversation.append({'role': current_role, 'parts': '\n'.join(current_parts)})
-
-        system_text = '\n'.join(system_contents)
-
-        return system_text, new_conversation
+        return system_text, gemini_conversation
 
     system_instruction, conversation_for_gemini = convert2gemini_conversation(conversation)
 
-    genai.configure(api_key=AIVT_Config.google_api_key)
+    safety_settings=[
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_NONE",
+        }
+    ]
 
-    generation_config = genai.types.GenerationConfig(
+    client = genai.Client(
+        api_key=AIVT_Config.google_api_key,
+    )
+
+    generation_config = types.GenerateContentConfig(
+        system_instruction=system_instruction,
+        safety_settings=safety_settings,
+        thinking_config=types.ThinkingConfig(thinking_budget=0), # Disables thinking
         max_output_tokens=max_output_tokens,
         temperature=temperature,
-        )
-
-    safety_settings=[
-            {
-                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                "threshold": "BLOCK_NONE",
-            },
-            {
-                "category": "HARM_CATEGORY_HATE_SPEECH",
-                "threshold": "BLOCK_NONE",
-            },
-            {
-                "category": "HARM_CATEGORY_HARASSMENT",
-                "threshold": "BLOCK_NONE",
-            },
-            {
-                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                "threshold": "BLOCK_NONE",
-            }
-        ]
-
-    genimi_model = genai.GenerativeModel(
-        system_instruction=system_instruction,
-        model_name=model_name,
-        generation_config=generation_config,
-        safety_settings=safety_settings
-        )
+        # top_p=0.95,
+        # top_k=20,
+        # candidate_count=1,
+    )
 
     reT = 0
     while reT < retry:
         reT += 1
 
         try:
-            response = genimi_model.generate_content(conversation_for_gemini)
+            response = client.models.generate_content(
+                model=model_name,
+                contents=conversation_for_gemini,
+                config=generation_config,
+            )
 
             try:
-                message = response.text
-            except Exception as e:
-                print(f"\n{response.prompt_feedback}\n{e}\n")
+                if response.candidates:
+                    message = response.candidates[0].content.parts[0].text
+                else:
+                    print(f"\nResponse was blocked or empty. Feedback: {response.prompt_feedback}\n")
+                    ans.put("")
+                    return
+            except (IndexError, AttributeError) as e:
+                print(f"\nError parsing response structure: {e}\nResponse: {response}\n")
                 ans.put("")
                 return
 
-            response_dict = response.to_dict()
-            usage_metadata = response_dict.get('usage_metadata', {})
-            prompt_tokens.put(usage_metadata.get('prompt_token_count'))
-            completion_tokens.put(usage_metadata.get('candidates_token_count'))
             ans.put(message)
             return
 
         except Exception as e:
             if reT < retry:
-                print(f"!!! GoogleAI_Gemini_API retry {reT} time !!!\n{e}\n")
+                print(f"!!! GoogleAI_Gemini_Answer_multi retry {reT} time !!!\n{e}\n")
                 continue
 
             else:
-                print(f"!!! GoogleAI_Gemini_API retry {reT} time !!!\n{e}\n")
+                print(f"!!! GoogleAI_Gemini_Answer_multi retry {reT} time !!!\n{e}\n")
                 ans.put("")
                 return
 
