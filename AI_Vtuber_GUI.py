@@ -25,6 +25,18 @@ import Mic_Record as mcrc
 from My_Tools.AIVT_print import aprint
 
 
+print("\n" + "="*29 + "[ 開發者提示 ]" + "="*29)
+print("您可能會在啟動時看到多則關於 'name shadows' 的 UserWarning。")
+print("此警告源於第三方套件 (google-genai)，並非本應用程式的錯誤。")
+print("請安心忽略此訊息，它不會影響程式的任何功能。")
+print("="*72 + "\n")
+print("="*29 + "[ DEVELOPER NOTICE ]" + "="*29)
+print("You may see multiple UserWarnings regarding 'name shadows' on startup.")
+print("This warning originates from a third-party library (google-genai) and is not an error in this application.")
+print("Please feel free to ignore this message as it does not affect any functionality.")
+print("="*78 + "\n")
+
+
 
 
 
@@ -1648,6 +1660,7 @@ class AI_Vtuber_GUI(gui.Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QPushBut
 
     def YouTube_live_chat_connect(self):
         live_chat.YouTube_live_chat_connect()
+        live_chat.Live_Chat_Status["YouTube_live_chat_retry"] = False
 
     def YouTube_live_chat_disconnect(self):
         self.mLC_YouTube.setChecked(False)
@@ -3203,7 +3216,14 @@ class GUI_YT_LiveChat(QtCore.QThread):
         live_chat.YouTube_LiveChat_boot_on()
 
         while live_chat.Live_Chat_Status["YouTube_live_chat"]:
-            time.sleep(0.1)
+            if not live_chat.Live_Chat_Status["YouTube_live_chat_alive"]:
+                live_chat.Live_Chat_Status["YouTube_live_chat_retry"] = True
+                self.signal_YouTube_live_chat_connect.emit()
+            
+            while live_chat.Live_Chat_Status["YouTube_live_chat_retry"]:
+                time.sleep(0.01)
+
+            time.sleep(0.02)
 
         self.signal_YouTube_live_chat_disconnect.emit()
 
