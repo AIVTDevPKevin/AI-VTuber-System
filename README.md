@@ -18,14 +18,10 @@ For the specific PyTorch packages which require a special handling, use the foll
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 ## Nvidia
+Please update your Nvidia GPU driver to ensure support for CUDA 12.1.
+
 Latest GPU Driver
-https://www.nvidia.com.tw/Download/index.aspx?lang=tw
-
-CUDA Toolkit 12.1.1
-https://developer.nvidia.com/cuda-12-1-1-download-archive
-
-cuDNN
-https://developer.nvidia.com/cudnn-downloads
+https://www.nvidia.com/Download/index.aspx
 
 ## Whisper
 Excerpt from https://github.com/openai/whisper
