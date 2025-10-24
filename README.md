@@ -6,7 +6,7 @@ A graphical system program that allows you to quickly create your own AI VTuber 
 https://www.youtube.com/watch?v=Hwss_p2Iroc
 
 ## User Manual
-https://docs.google.com/document/d/16DU-DJKMaC-15K6iShLd9ioXc8VqjTLqgMPswsjPjF0/edit?usp=sharing
+https://docs.google.com/document/d/1na16cbaTVYin16BhvMQmeYYAZPwSyCoQ9sfcie3K-FQ/edit?usp=sharing
 
 ## How to Obtain an API Key in Google AI Studio
 https://drive.google.com/file/d/1WAwvtkWUyqnOu4QH-ZhlbuyONbQE4Ul1/view?usp=sharing
