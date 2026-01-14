@@ -2,7 +2,7 @@
 ***AI-VTuber-System-2*** is currently in development. A brand-new user-friendly GUI interface with full i18n internationalization support. More comprehensive customization for your own AI VTuber. Will support local LLMs and TTS, And features rapid voice cloning functionality. The new project remains open-source. Look forward to it in 2026.
 <img width="3840" height="2160" alt="AI-VTuber-System-2 Beta Preview" src="https://github.com/user-attachments/assets/2f6355b7-66df-47c0-8a86-abaf018c60a8" />
 
-https://github.com/user-attachments/assets/07bd5149-cc0b-41df-97ce-b68748802159
+https://github.com/user-attachments/assets/485c1035-6098-4a00-8338-65747d6d5ec0
 
 # AI-VTuber-System
 A graphical system program that allows you to quickly create your own AI VTuber for free.
