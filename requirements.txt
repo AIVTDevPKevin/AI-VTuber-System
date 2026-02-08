@@ -22,7 +22,7 @@ decorator==4.4.2
 defusedxml==0.7.1
 distro==1.9.0
 docopt==0.6.2
-edge-tts==7.2.3
+edge-tts==7.2.7
 executing==2.0.1
 fastjsonschema==2.19.1
 filelock==3.13.1
